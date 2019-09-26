@@ -1,11 +1,8 @@
-# GLORIA
-Matlab code for "Hyperspectral Super-Resolution via Global-Local Low-Rank Matrix Estimation"
-
-# Hybrid inexact Block Coordinate Descent (HiBCD)
-Matlab code for "Hybrid Inexact BCD for Coupled Structured Matrix Factorization in Hyperspectral Super-Resolution", submitted to IEEE Transaction on Signal Processing, 2019.
+#  Global-Local lOw-Rank promotIng Algorithm (GLORIA)
+Matlab code for "Hyperspectral Super-Resolution via Global-Local Low-Rank Matrix Estimation" submitted to IEEE Transaction on Geoscience and Remote Sensing, 2019.
 
 ## Usage
-1. Run "demo_synthetic.m" to 
+1. Run "demo_synthetic.m" to get the synthetic experiment result
 
 ## Reference
 Ruiyuan Wu, Wing-Kin Ma, Xiao Fu, and Qiang Li, "Hyperspectral Super-Resolution via Global-Local Low-Rank Matrix Estimation" [[pdf]](https://arxiv.org/pdf/1907.01149.pdf)
