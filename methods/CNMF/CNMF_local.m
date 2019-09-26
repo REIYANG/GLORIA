@@ -1,0 +1,29 @@
+function [X] = CNMF_local(HSI_noise,MSI_noise,CNMF_opt,patch_num)
+W1 = CNMF_opt.W1;
+W2 = CNMF_opt.W2;
+dsRatio = CNMF_opt.dsRatio;
+W1_num = sqrt(patch_num);
+W2_num = sqrt(patch_num);
+YM_s1 = W1/W1_num; 
+YM_s2 = W2/W2_num;
+YH_s1 = W1/dsRatio/W1_num;
+YH_s2 = W2/dsRatio/W2_num;
+N = CNMF_opt.N;
+X = zeros(W1,W2,size(HSI_noise,3));
+GauSigma = CNMF_opt.GauSigma;
+kernelSize = CNMF_opt.kernelSize;
+CNMF_opt.G = Construct_Toeplitz_G(YM_s1,YM_s2,kernelSize,GauSigma,dsRatio);
+for i = 1:W1_num 
+    for j = 1:W2_num
+        YM_local = MSI_noise((i-1)*YM_s1+1:i*YM_s1,(j-1)*YM_s2+1:j*YM_s2,:);
+        YH_local = HSI_noise((i-1)*YH_s1+1:i*YH_s1,(j-1)*YH_s2+1:j*YH_s2,:);
+        A_init = init_AS(reshape(YH_local,YH_s1*YH_s2,[])',N);
+        S_init = rand(N,YM_s1*YM_s2);
+        S_init = bsxfun(@rdivide,S_init,sum(S_init));
+        CNMF_opt.A_init = A_init;
+        CNMF_opt.S_init = S_init;
+        [A_local,S_local] = CNMF(YH_local,YM_local,CNMF_opt);
+        X_local = A_local*S_local;
+        X((i-1)*YM_s1+1:i*YM_s1,(j-1)*YM_s2+1:j*YM_s2,:) = reshape(X_local',YM_s1,YM_s2,[]);
+    end    
+end
